@@ -32,7 +32,9 @@
 
     <%= if not Enum.empty?(@tasks) do %>
       <footer>
-        <small>0 todos left</small>
+        <small>
+          <%= count_tasks(false, @tasks) %> todos left
+        </small>
         <div class="float-right">
           <%= link to: Routes.task_path(@conn, :index) do %>
             <code>All</code>

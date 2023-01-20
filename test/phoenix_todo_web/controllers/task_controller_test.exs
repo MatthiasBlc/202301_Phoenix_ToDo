@@ -10,14 +10,7 @@ defmodule PhoenixTodoWeb.TaskControllerTest do
   describe "index" do
     test "lists all tasks", %{conn: conn} do
       conn = get(conn, Routes.task_path(conn, :index))
-      assert html_response(conn, 200) =~ "Listing Tasks"
-    end
-  end
-
-  describe "new task" do
-    test "renders form", %{conn: conn} do
-      conn = get(conn, Routes.task_path(conn, :new))
-      assert html_response(conn, 200) =~ "New Task"
+      assert html_response(conn, 200) =~ "To do"
     end
   end
 
@@ -25,16 +18,15 @@ defmodule PhoenixTodoWeb.TaskControllerTest do
     test "redirects to show when data is valid", %{conn: conn} do
       conn = post(conn, Routes.task_path(conn, :create), task: @create_attrs)
 
-      assert %{id: id} = redirected_params(conn)
-      assert redirected_to(conn) == Routes.task_path(conn, :show, id)
+      assert redirected_to(conn) == Routes.task_path(conn, :index)
 
-      conn = get(conn, Routes.task_path(conn, :show, id))
-      assert html_response(conn, 200) =~ "Show Task"
+      conn = get(conn, Routes.task_path(conn, :index))
+      assert html_response(conn, 200) =~ "To do"
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
       conn = post(conn, Routes.task_path(conn, :create), task: @invalid_attrs)
-      assert html_response(conn, 200) =~ "New Task"
+      assert html_response(conn, 200) =~ "To do"
     end
   end
 
@@ -52,9 +44,9 @@ defmodule PhoenixTodoWeb.TaskControllerTest do
 
     test "redirects when data is valid", %{conn: conn, task: task} do
       conn = put(conn, Routes.task_path(conn, :update, task), task: @update_attrs)
-      assert redirected_to(conn) == Routes.task_path(conn, :show, task)
+      assert redirected_to(conn) == Routes.task_path(conn, :index)
 
-      conn = get(conn, Routes.task_path(conn, :show, task))
+      conn = get(conn, Routes.task_path(conn, :index))
       assert html_response(conn, 200) =~ "some updated text"
     end
 
@@ -71,9 +63,8 @@ defmodule PhoenixTodoWeb.TaskControllerTest do
       conn = delete(conn, Routes.task_path(conn, :delete, task))
       assert redirected_to(conn) == Routes.task_path(conn, :index)
 
-      assert_error_sent 404, fn ->
-        get(conn, Routes.task_path(conn, :show, task))
-      end
+      conn = get(conn, Routes.task_path(conn, :index))
+      refute html_response(conn, 200) =~ task.text
     end
   end
 

@@ -34,10 +34,11 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 This is a tolist app.
 You can:
 
--
--
--
--
+- Create a todo task
+- Mark a task as completed
+- Delete a task
+- Filter tasks by active, completed
+- Clear all completed tasks if needed (uncheck the completed button)
 
 ## Sources
 

@@ -10,8 +10,12 @@
             <tr>
               <td>
                 <%= link to: Routes.task_path(@conn, :complete, task) do %>
-                  &#10004
-                  <% end %>
+                  <%= if task.completed do %>
+                    &#9745;
+                    <% else %>
+                      &#10004;
+                      <% end %>
+                        <% end %>
               </td>
               <td>
                 <%= link task.text , to: Routes.task_path(@conn, :edit, task) %>

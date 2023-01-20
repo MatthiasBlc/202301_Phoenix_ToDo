@@ -6,7 +6,7 @@
     <section>
       <table>
         <tbody>
-          <%= for task <- @tasks do %>
+          <%= for task <- filter_tasks(@conn.params, @tasks) do %>
             <tr>
               <td>
                 <%= link to: Routes.task_path(@conn, :complete, task) do %>

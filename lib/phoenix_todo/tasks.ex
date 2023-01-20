@@ -18,7 +18,10 @@ defmodule PhoenixTodo.Tasks do
 
   """
   def list_tasks do
-    Repo.all(Task)
+    Task
+    |> order_by(asc: :completed)
+    |> order_by(desc: :id)
+    |> Repo.all()
   end
 
   @doc """

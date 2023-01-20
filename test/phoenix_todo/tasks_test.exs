@@ -11,8 +11,8 @@ defmodule PhoenixTodo.TasksTest do
     @invalid_attrs %{completed: nil, text: nil}
 
     test "list_tasks/0 returns all tasks" do
-      task = task_fixture()
-      assert Tasks.list_tasks() == [task]
+      tasks = tasks_fixture()
+      assert Tasks.list_tasks() == tasks
     end
 
     test "get_task!/1 returns the task with given id" do

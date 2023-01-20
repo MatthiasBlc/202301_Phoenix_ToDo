@@ -54,6 +54,11 @@ defmodule PhoenixTodoWeb.TaskController do
     |> redirect(to: Routes.task_path(conn, :index))
   end
 
+  def clear(conn, _params) do
+    Tasks.clear()
+    redirect(conn, to: Routes.task_path(conn, :index))
+  end
+
   def complete(conn, %{"id" => id}) do
     task = Tasks.get_task!(id)
     Tasks.update_task(task, completed?(task.completed))

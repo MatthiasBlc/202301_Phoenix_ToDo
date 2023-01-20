@@ -101,4 +101,9 @@ defmodule PhoenixTodo.Tasks do
   def change_task(%Task{} = task, attrs \\ %{}) do
     Task.changeset(task, attrs)
   end
+
+  def clear do
+    from(t in Task, where: t.completed == true, select: t)
+    |> Repo.update_all(set: [completed: false])
+  end
 end

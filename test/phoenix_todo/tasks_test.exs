@@ -57,5 +57,12 @@ defmodule PhoenixTodo.TasksTest do
       task = task_fixture()
       assert %Ecto.Changeset{} = Tasks.change_task(task)
     end
+
+    test "clear/1 updates tasks completed to false" do
+      task_fixture()
+      clear = Tasks.clear()
+
+      assert {1, _task} = clear
+    end
   end
 end

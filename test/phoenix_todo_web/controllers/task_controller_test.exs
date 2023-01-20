@@ -68,6 +68,16 @@ defmodule PhoenixTodoWeb.TaskControllerTest do
     end
   end
 
+  describe "clear tasks" do
+    test "redirects", %{conn: conn} do
+      conn = get(conn, Routes.task_path(conn, :clear))
+      assert redirected_to(conn) == Routes.task_path(conn, :index)
+
+      conn = get(conn, Routes.task_path(conn, :index))
+      refute html_response(conn, 200) =~ "Clear completed[0]"
+    end
+  end
+
   defp create_task(_) do
     task = task_fixture()
     %{task: task}

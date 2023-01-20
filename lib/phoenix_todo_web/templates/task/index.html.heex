@@ -1,0 +1,43 @@
+<div class="row">
+  <div class="column column-60 column-offset-20">
+    <header>
+      <%= render "form.html" , Map.put(assigns, :action, Routes.task_path(@conn, :create)) %>
+    </header>
+    <section>
+      <table>
+        <tbody>
+          <%= for task <- @tasks do %>
+            <tr>
+              <td>
+                <%= link to: Routes.task_path(@conn, :complete, task) do %>
+                  &#10004
+                  <% end %>
+              </td>
+              <td>
+                <%= link task.text , to: Routes.task_path(@conn, :edit, task) %>
+              </td>
+              <td>
+                <%= link "X" , to: Routes.task_path(@conn, :delete, task), method: :delete, data:
+                  [confirm: "Are you sure?" ] %>
+              </td>
+            </tr>
+            <% end %>
+        </tbody>
+      </table>
+    </section>
+
+    <%= if not Enum.empty?(@tasks) do %>
+      <footer>
+        <small>0 todos left</small>
+        <div class="float-right">
+          <%= link to: Routes.task_path(@conn, :index) do %>
+            <code>All</code>
+            <% end %>
+              <%= link "Active [0]" , to: Routes.task_path(@conn, :index, completed: false) %>
+                <%= link "completed [0]" , to: Routes.task_path(@conn, :index, completed: true) %>
+                  <%= link "Clear completed [0]" , to: Routes.task_path(@conn, :clear) %>
+        </div>
+      </footer>
+      <% end %>
+  </div>
+</div>

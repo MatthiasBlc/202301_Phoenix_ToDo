@@ -1,4 +1,5 @@
 defmodule PhoenixTodoWeb.Router do
+  # alias PhoenixTodoWeb.TaskController
   use PhoenixTodoWeb, :router
 
   pipeline :browser do
@@ -17,7 +18,10 @@ defmodule PhoenixTodoWeb.Router do
   scope "/", PhoenixTodoWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    get "/", TaskController, :index
+    resources "/tasks", TaskController, except: [:index, :new, :show]
+    get "/tasks/completed/:id", TaskController, :complete
+    get "/tasks/clear", TaskController, :clear
   end
 
   # Other scopes may use custom stacks.
